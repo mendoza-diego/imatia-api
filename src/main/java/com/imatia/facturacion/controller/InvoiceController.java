@@ -5,6 +5,7 @@ import com.imatia.facturacion.entities.Invoice;
 import com.imatia.facturacion.entities.InvoiceItem;
 import com.imatia.facturacion.repository.InvoiceItemRepository;
 import com.imatia.facturacion.repository.InvoiceRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class InvoiceController {
 
     @GetMapping("/invoices")
     List<Invoice> allInvoices() {
-        return invoiceRepository.findAll();
+        return invoiceRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @GetMapping("/invoices/{id}/items")
