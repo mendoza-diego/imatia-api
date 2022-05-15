@@ -50,6 +50,14 @@ public class InvoiceController {
 
     @PutMapping("/invoices/{id}")
     Invoice replaceInvoice(@RequestBody Invoice invoice, @PathVariable Long id) {
+        if (invoice.getItems() != null && invoice.getItems().size() > 0) {
+            for (InvoiceItem item : invoice.getItems()) {
+                if (item.getId() == null || item.getId() == 0) {
+                    invoiceItemRepository.save(item);
+                }
+            }
+        }
+
         return invoiceRepository.findById(id)
             .map(i -> {
                 i.setCustomer(invoice.getCustomer());
